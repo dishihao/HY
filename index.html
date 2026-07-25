@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#222222">
   <meta name="description" content="药品检验项目独立计算网页入口。">
   <title>检验项目计算工具</title>
-  <link rel="stylesheet" href="lab-pages.css?v=20260725-1">
+  <link rel="stylesheet" href="lab-pages.css?v=20260725-2">
   <link rel="stylesheet" href="portal.css?v=20260725-1">
 </head>
 <body>
@@ -17,7 +17,7 @@
   <main class="app-shell">
     <article class="paper portal-paper">
       <h1 class="portal-title">检验项目选择</h1>
-      <p class="portal-intro">各项目的数据、计算公式、标准规定和打印记录完全分开，互不影响。点击项目进入对应网页。</p>
+      <p class="portal-intro">各项目的数据、计算公式、标准规定和打印记录完全分开。杂质、水分和总灰分已按你上传的纸质原始记录重新设计。</p>
 
       <div class="project-grid">
         <a class="project-card" href="assay.html">
@@ -25,15 +25,20 @@
           <p>对照品5针、供试品双样、RSD、相对偏差、平均含量及标准判定。</p>
           <span class="tag">独立页面</span>
         </a>
+        <a class="project-card" href="impurities.html">
+          <h2>杂质测定</h2>
+          <p>按纸面“样品重量、杂质重量、杂质含量、相对偏差、平均含量”布局计算。</p>
+          <span class="tag">纸面复刻</span>
+        </a>
         <a class="project-card" href="moisture.html">
           <h2>水分测定</h2>
-          <p>称量瓶法双样计算，自动计算供试品质量、失重、水分、平均值和判定。</p>
-          <span class="tag">独立页面</span>
+          <p>保留瓶重和瓶＋样两次恒重记录，按复称恒重数据自动计算双样水分。</p>
+          <span class="tag">纸面复刻</span>
         </a>
         <a class="project-card" href="ash.html">
           <h2>总灰分测定</h2>
-          <p>坩埚称量双样计算，自动计算灰分质量、总灰分、平均值和判定。</p>
-          <span class="tag">独立页面</span>
+          <p>保留坩埚及坩埚＋残渣两次恒重记录，自动计算双样总灰分。</p>
+          <span class="tag">纸面复刻</span>
         </a>
         <a class="project-card" href="sulfur-dioxide.html">
           <h2>二氧化硫残留量</h2>
@@ -42,7 +47,7 @@
         </a>
       </div>
 
-      <div class="portal-note"><strong>说明：</strong>可输入区域均以浅黄色标出，自动计算结果为白底双下划线；打印时自动恢复黑白纸质记录效果。二氧化硫页面的换算系数须按实际检验SOP填写。</div>
+      <div class="portal-note"><strong>说明：</strong>可输入区域均以浅黄色标出，自动计算结果为白底双下划线；打印时自动恢复黑白纸质记录效果。杂质、水分和总灰分的标准值可自行修改。</div>
       <footer class="portal-footer">合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</footer>
     </article>
   </main>
