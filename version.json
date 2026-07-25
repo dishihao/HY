@@ -1,0 +1,12 @@
+{
+  "version": "2026.07.25.1",
+  "deployed_at": "2026-07-25",
+  "cache_enabled": false,
+  "fixed_instruments": {
+    "balance_model": "AVW120D",
+    "balance_no": "HY-TP-09",
+    "gc_model": "8860",
+    "gc_no": "HY-QX-01"
+  },
+  "note": "仪器型号和编号已固定为不可编辑文本；网页不启用离线缓存。"
+}
