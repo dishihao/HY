@@ -11,8 +11,8 @@
   const fraction = (numerator, denominator) =>
     `<span class="calc-fraction"><span class="calc-numerator">${numerator}</span><span class="calc-denominator">${denominator}</span></span>`;
 
-  const equation = (label, expression, result = "", unit = "") =>
-    `<div class="formula-substitution-row"><span class="calc-label">${label}</span>${expression}${result !== "" ? `<span class="calc-divider">＝</span><span class="calc-result">${esc(result)}${unit}</span>` : ""}</div>`;
+  const equation = (label, expression, result = "", unit = "", extraClass = "") =>
+    `<div class="formula-substitution-row${extraClass ? ` ${extraClass}` : ""}"><span class="calc-label">${label}</span>${expression}${result !== "" ? `<span class="calc-divider">＝</span><span class="calc-result">${esc(result)}${unit}</span>` : ""}</div>`;
 
   function renderSymbolicFormula() {
     if (method === "assay") return;
@@ -153,9 +153,15 @@
       const v = byKey(`sampleInjection${index}`), x = output(`content${index}`);
       if (complete([p1, p2, a])) rows.push(equation(`Ā<sub>样${index}</sub>＝`, fraction(`${esc(p1)}＋${esc(p2)}`, "2"), a));
       if (complete([a, c, f, vStd, stdAvg, w, q, v, x])) {
-        const numerator = `${esc(a)}×${esc(c)}×${esc(f)}×${esc(vStd)}`;
-        const denominator = `${esc(stdAvg)}×${esc(w)}×1000×（1－${esc(q)}%）×${esc(v)}`;
-        rows.push(equation(`X<sub>${index}</sub>＝`, `${fraction(numerator, denominator)}<span>×100%</span>`, x, "%"));
+        const numerator = `${esc(a)} × ${esc(c)} × ${esc(f)} × ${esc(vStd)}`;
+        const denominator = `${esc(stdAvg)} × ${esc(w)} × 1000 × （1－${esc(q)}%） × ${esc(v)}`;
+        rows.push(equation(
+          `X<sub>${index}</sub>＝`,
+          `${fraction(numerator, denominator)}<span>× 100%</span>`,
+          x,
+          "%",
+          "formula-assay-content"
+        ));
       }
     });
 
