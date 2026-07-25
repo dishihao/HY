@@ -4,69 +4,112 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#222222">
+  <meta name="description" content="按纸质原始记录布局制作的总灰分测定计算页面。">
   <title>总灰分测定计算</title>
-  <link rel="stylesheet" href="lab-pages.css?v=20260725-1">
+  <link rel="stylesheet" href="lab-pages.css?v=20260725-2">
 </head>
 <body data-method="ash" data-unit="%" data-project="总灰分">
   <header class="toolbar no-print">
     <div class="toolbar-title">总灰分测定计算</div>
     <div class="toolbar-actions">
       <a class="btn" href="index.html">项目首页</a>
-      <button class="btn" id="exampleBtn" type="button">载入示例</button>
+      <button class="btn" id="exampleBtn" type="button">载入纸面示例</button>
       <button class="btn" id="copyBtn" type="button">复制结果</button>
       <button class="btn" id="printBtn" type="button">打印 / 保存PDF</button>
       <button class="btn" id="resetBtn" type="button">清空数据</button>
     </div>
   </header>
+
   <main class="app-shell">
     <article class="paper">
-      <h1 class="record-title">总灰分测定</h1>
-      <p class="record-subtitle">独立电子记录页；灰化温度、灰化步骤及恒重要求按实际检验标准或SOP执行。</p>
+      <h1 class="record-title">【检查】总灰分</h1>
+      <p class="record-subtitle">布局、坩埚恒重记录和计算公式按上传的焦栀子成品检验原始记录制作。</p>
 
       <section class="section">
-        <h2 class="section-title">数据记录：</h2>
+        <h2 class="section-title">1. 仪器与测定条件</h2>
         <div class="table-scroll">
-          <table class="record-table">
-            <colgroup><col class="label-col"><col class="value-col"><col class="value-col"></colgroup>
-            <thead><tr><th>测定项目</th><th>样品1</th><th>样品2</th></tr></thead>
+          <table class="instrument-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="label-col"><col class="value-col"></colgroup>
             <tbody>
-              <tr><th>样品编号</th><td><input class="entry" data-field="sampleNo1" value="1"></td><td><input class="entry" data-field="sampleNo2" value="2"></td></tr>
-              <tr><th>空坩埚质量 m₀（g）</th><td><input id="container1" class="entry" data-field="container1" data-number inputmode="decimal"></td><td><input id="container2" class="entry" data-field="container2" data-number inputmode="decimal"></td></tr>
-              <tr><th>灰化前坩埚＋供试品 m₁（g）</th><td><input id="before1" class="entry" data-field="before1" data-number inputmode="decimal"></td><td><input id="before2" class="entry" data-field="before2" data-number inputmode="decimal"></td></tr>
-              <tr><th>灰化后坩埚＋灰分 m₂（g）</th><td><input id="after1" class="entry" data-field="after1" data-number inputmode="decimal"></td><td><input id="after2" class="entry" data-field="after2" data-number inputmode="decimal"></td></tr>
-              <tr class="result-row"><th>供试品质量 m₁－m₀（g）</th><td><input id="sampleWeight1" class="output" readonly value="—"></td><td><input id="sampleWeight2" class="output" readonly value="—"></td></tr>
-              <tr class="result-row"><th>灰分质量 m₂－m₀（g）</th><td><input id="change1" class="output" readonly value="—"></td><td><input id="change2" class="output" readonly value="—"></td></tr>
-              <tr class="result-row"><th>总灰分 X（%）</th><td><input id="result1" class="output" readonly value="—"></td><td><input id="result2" class="output" readonly value="—"></td></tr>
-              <tr class="result-row"><th>相对偏差（%）</th><td colspan="2"><input id="relativeDeviation" class="output wide-output" readonly value="—"></td></tr>
-              <tr class="result-row"><th>平均总灰分（%）</th><td colspan="2"><input id="average" class="output wide-output" readonly value="—"></td></tr>
+              <tr><th>电子天平型号</th><td><input class="entry text-left" data-field="balanceModel"></td><th>编号</th><td><input class="entry text-left" data-field="balanceId"></td></tr>
+              <tr><th>箱式电炉型号</th><td><input class="entry text-left" data-field="furnaceModel"></td><th>编号</th><td><input class="entry text-left" data-field="furnaceId"></td></tr>
+              <tr><th>灰化温度（℃）</th><td><input class="entry" data-field="temperature" data-number inputmode="decimal" value="550"></td><th>首次灰化时间（小时）</th><td><input class="entry" data-field="firstHours" data-number inputmode="decimal" value="5"></td></tr>
+              <tr><th>复称灰化时间（小时）</th><td><input class="entry" data-field="finalHours" data-number inputmode="decimal" value="1"></td><th>计算采用</th><td>复称恒重数据</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
       <section class="section">
-        <h2 class="section-title">计算：</h2>
-        <div class="formula-box">总灰分（%）＝（m₂－m₀）÷（m₁－m₀）×100%</div>
+        <h2 class="section-title">2. 测定方法</h2>
+        <p class="method-line">照总灰分（通则2302）测定。</p>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">3. 结果与计算</h2>
+        <div class="table-scroll">
+          <table class="record-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="value-col"></colgroup>
+            <thead><tr><th>样品编号</th><th>1</th><th>2</th></tr></thead>
+            <tbody>
+              <tr><th>样品编号</th><td><input class="entry" data-field="sampleNo1" value="1"></td><td><input class="entry" data-field="sampleNo2" value="2"></td></tr>
+              <tr><th>坩埚重 W₀（g）- 首次恒重</th><td><input class="entry" data-field="crucibleFirst1" data-number inputmode="decimal"></td><td><input class="entry" data-field="crucibleFirst2" data-number inputmode="decimal"></td></tr>
+              <tr><th>坩埚重 W₀（g）- 复称恒重</th><td><input class="entry" data-field="crucibleFinal1" data-number inputmode="decimal"></td><td><input class="entry" data-field="crucibleFinal2" data-number inputmode="decimal"></td></tr>
+              <tr><th>称样量 W<sub>r</sub>（g）</th><td><input class="entry" data-field="sampleMass1" data-number inputmode="decimal"></td><td><input class="entry" data-field="sampleMass2" data-number inputmode="decimal"></td></tr>
+              <tr><th>坩埚＋残渣重 W₁（g）- 首次灰化</th><td><input class="entry" data-field="residueFirst1" data-number inputmode="decimal"></td><td><input class="entry" data-field="residueFirst2" data-number inputmode="decimal"></td></tr>
+              <tr><th>坩埚＋残渣重 W₁（g）- 复称恒重</th><td><input class="entry" data-field="residueFinal1" data-number inputmode="decimal"></td><td><input class="entry" data-field="residueFinal2" data-number inputmode="decimal"></td></tr>
+              <tr class="result-row"><th>总灰分 X（%）</th><td><input id="result1" class="output" readonly value="—"></td><td><input id="result2" class="output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>相对偏差（%）</th><td colspan="2"><input id="relativeDeviation" class="output wide-output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>平均值 X̄（%）</th><td colspan="2"><input id="average" class="output wide-output" readonly value="—"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="formula-box">X ＝（W₁ － W₀）÷ W<sub>r</sub> × 100%</div>
+        <p class="formula-note">W₀和W₁均采用复称恒重数据；页面同时保留首次称量记录，布局与纸面表格一致。</p>
         <div class="result-lines">
           <div class="result-line"><span>X₁＝</span><strong id="summary1">—</strong><span>%</span></div>
           <div class="result-line"><span>X₂＝</span><strong id="summary2">—</strong><span>%</span></div>
           <div class="result-line"><span>相对偏差＝</span><strong id="summaryRd">—</strong><span>%</span></div>
           <div class="result-line"><span>平均总灰分＝</span><strong id="summaryAvg">—</strong><span>%</span></div>
         </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">4. 标准规定与结果</h2>
         <div class="standard-grid">
           <span>标准规定：</span>
-          <select id="relation" class="entry-select" data-field="relation"><option value="max">不得高于</option><option value="min">不得少于</option></select>
-          <input id="spec" class="entry" data-field="spec" data-number inputmode="decimal" placeholder="请输入">
+          <select class="entry-select" data-field="relation"><option value="max">不得过</option><option value="min">不得少于</option></select>
+          <input class="entry" data-field="spec" data-number inputmode="decimal" value="6.0">
           <span>%</span>
         </div>
-        <div class="standard-grid"><span>标准文字：</span><input id="standardText" class="output" readonly value="请输入标准规定。"></div>
-        <div class="rounding-note">数值按“四舍六入五成双”修约；两份结果比标准规定多保留1位小数，平均结果与标准规定保留相同小数位。</div>
-        <div class="status-row"><div>测定结果：<span id="resultStatus" class="status pending">待输入</span></div><div class="conclusion">结论：本品总灰分测定结果 <span id="overallStatus" class="status pending">待输入</span>。</div></div>
+        <div class="standard-grid standard-text-row"><span>标准文字：</span><input id="standardText" class="output" readonly value="请输入标准规定。"></div>
+        <div class="rounding-note">采用“四舍六入五成双”。单份结果比标准规定多保留1位小数；相对偏差按已修约的X₁、X₂计算；平均值与标准规定保留相同小数位。</div>
+        <div class="status-row">
+          <div>测定结果：<span id="resultStatus" class="status pending">待输入</span></div>
+          <div class="conclusion">结论：本品总灰分测定结果 <span id="overallStatus" class="status pending">待输入</span>。</div>
+        </div>
       </section>
+
+      <section class="section environment-section">
+        <h2 class="section-title">环境与签字记录</h2>
+        <div class="table-scroll">
+          <table class="signature-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="label-col"><col class="value-col"></colgroup>
+            <tbody>
+              <tr><th>室温（℃）</th><td><input class="entry" data-field="roomTemp" data-number inputmode="decimal"></td><th>相对湿度（%）</th><td><input class="entry" data-field="humidity" data-number inputmode="decimal"></td></tr>
+              <tr><th>检验人</th><td><input class="entry text-left" data-field="inspector"></td><th>检验日期</th><td><input class="entry" data-field="inspectDate" type="date"></td></tr>
+              <tr><th>复核人</th><td><input class="entry text-left" data-field="reviewer"></td><th>复核日期</th><td><input class="entry" data-field="reviewDate" type="date"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <footer class="paper-footer"><span>合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</span><span>本页数据刷新后清空</span></footer>
     </article>
   </main>
+
   <div id="toast" class="toast"></div>
-  <script src="lab-common.js?v=20260725-1"></script>
+  <script src="lab-common.js?v=20260725-2"></script>
 </body>
 </html>
