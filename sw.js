@@ -13,7 +13,10 @@ self.addEventListener("activate", event => {
 
     await self.registration.unregister();
 
-    const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-    await Promise.all(windows.map(client => client.navigate(client.url)));
+    // Reload once only when an old application cache was actually removed.
+    if (keys.length > 0) {
+      const windows = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      await Promise.all(windows.map(client => client.navigate(client.url)));
+    }
   })());
 });
