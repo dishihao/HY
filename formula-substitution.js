@@ -14,6 +14,9 @@
   const equation = (label, expression, result = "", unit = "", extraClass = "") =>
     `<div class="formula-substitution-row${extraClass ? ` ${extraClass}` : ""}"><span class="calc-label">${label}</span>${expression}${result !== "" ? `<span class="calc-divider">＝</span><span class="calc-result">${esc(result)}${unit}</span>` : ""}</div>`;
 
+  const directResult = (label, result, unit = "") =>
+    `<div class="formula-substitution-row formula-direct-result"><span class="calc-label">${label}</span><span class="calc-result">${esc(result)}${unit}</span></div>`;
+
   function renderSymbolicFormula() {
     if (method === "assay") return;
     const box = document.querySelector(".formula-box");
@@ -132,26 +135,14 @@
   }
 
   function renderAssay() {
-    const peaks = [1, 2, 3, 4, 5].map(i => byKey(`stdPeak${i}`));
-    const stdAvg = output("stdAverage"), rsd = output("rsdOutput");
+    const stdAvg = output("stdAverage");
     const c = byKey("stdConcentration"), vStd = byKey("stdInjection");
     const rows = [];
 
-    if (complete([...peaks, stdAvg])) {
-      rows.push(equation("Ā<sub>对</sub>＝", fraction(peaks.map(esc).join("＋"), "5"), stdAvg));
-    }
-    if (complete([...peaks, stdAvg, rsd])) {
-      const deviations = peaks.map(value => `（${esc(value)}－${esc(stdAvg)}）²`).join("＋");
-      const radical = `<span class="calc-radical"><span class="calc-radical-sign">√</span><span class="calc-radicand">${fraction(deviations, "4")}</span></span>`;
-      rows.push(equation("RSD＝", `${fraction(radical, esc(stdAvg))}<span>×100%</span>`, rsd, "%"));
-    }
-
     [1, 2].forEach(index => {
-      const p1 = byKey(`sample${index}Peak1`), p2 = byKey(`sample${index}Peak2`);
       const a = output(`sampleAvg${index}`), f = byKey(`dilution${index}`), w = byKey(`weight${index}`);
       const q = byKey(`moisture${index}`) || (index === 2 ? byKey("moisture1") : "");
       const v = byKey(`sampleInjection${index}`), x = output(`content${index}`);
-      if (complete([p1, p2, a])) rows.push(equation(`Ā<sub>样${index}</sub>＝`, fraction(`${esc(p1)}＋${esc(p2)}`, "2"), a));
       if (complete([a, c, f, vStd, stdAvg, w, q, v, x])) {
         const numerator = `${esc(a)} × ${esc(c)} × ${esc(f)} × ${esc(vStd)}`;
         const denominator = `${esc(stdAvg)} × ${esc(w)} × 1000 × （1－${esc(q)}%） × ${esc(v)}`;
@@ -166,7 +157,15 @@
     });
 
     const x1 = output("content1"), x2 = output("content2"), rd = output("relativeDeviation"), avg = output("averageContent");
-    rows.push(...finalRows(x1, x2, rd, avg, "平均含量＝", "%"));
+    if (complete([rd])) rows.push(directResult("相对偏差＝", rd, "%"));
+    if (complete([x1, x2, avg])) {
+      rows.push(equation(
+        "平均含量＝",
+        fraction(`（${esc(x1)}＋${esc(x2)}）`, "2"),
+        avg,
+        "%"
+      ));
+    }
     renderRows(rows);
   }
 
