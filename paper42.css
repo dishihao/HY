@@ -4,130 +4,32 @@
   font-family: "SimSun", "Songti SC", serif;
   color: #000;
 }
+.paper42-title {margin:0 0 8px;padding:0;font-size:16px;line-height:1.5;font-weight:700;letter-spacing:.02em;}
+.paper42-table {width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;border:1.2px solid #111;}
+.paper42-table col.paper42-label-col {width:34%;}
+.paper42-table col.paper42-value-col {width:33%;}
+.paper42-table th,.paper42-table td {border:1px solid #111;padding:7px 10px;height:43px;vertical-align:middle;background:#fff;}
+.paper42-table th {font-weight:700;text-align:center;}
+.paper42-table .paper42-row-label {padding-left:18px;text-align:left;white-space:nowrap;}
+.paper42-table input.data {width:88%;margin:0 auto;display:block;padding:4px 3px 3px;border:0;border-bottom:1px solid #111;border-radius:0;background:transparent;box-shadow:none;color:#000;text-align:center;font-family:"SimSun","Songti SC",serif;font-size:15px;}
+.paper42-table input.data:focus {border-color:#000;box-shadow:none;outline:1px dashed #777;}
+.paper42-table input.data[readonly] {border-bottom-style:double;background:transparent;color:#000;font-weight:700;}
+.paper42-table .paper42-result-row td {font-weight:700;}
+.paper42-table .paper42-wide-result {width:45%;}
+.paper42-hint {display:none;}
 
-.paper42-title {
-  margin: 0 0 8px;
-  padding: 0;
-  font-size: 16px;
-  line-height: 1.5;
-  font-weight: 700;
-  letter-spacing: .02em;
+/* 电子记录版只保留纸质含量测定主体：对照品表、供试品表、计算和结果。 */
+.paper > .section:nth-of-type(1),
+.paper > .section:nth-of-type(2) {
+  display:none;
 }
 
-.paper42-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  background: #fff;
-  border: 1.2px solid #111;
+@media (max-width:860px){
+.paper42-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.paper42-table{min-width:650px;}
 }
-
-.paper42-table col.paper42-label-col { width: 34%; }
-.paper42-table col.paper42-value-col { width: 33%; }
-
-.paper42-table th,
-.paper42-table td {
-  border: 1px solid #111;
-  padding: 7px 10px;
-  height: 43px;
-  vertical-align: middle;
-  background: #fff;
-}
-
-.paper42-table th {
-  font-weight: 700;
-  text-align: center;
-}
-
-.paper42-table .paper42-row-label {
-  padding-left: 18px;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.paper42-table .paper42-sub-label {
-  padding-left: 42px;
-  text-align: left;
-  font-size: 14px;
-}
-
-.paper42-table input.data {
-  width: 88%;
-  margin: 0 auto;
-  display: block;
-  padding: 4px 3px 3px;
-  border: 0;
-  border-bottom: 1px solid #111;
-  border-radius: 0;
-  background: transparent;
-  box-shadow: none;
-  color: #000;
-  text-align: center;
-  font-family: "SimSun", "Songti SC", serif;
-  font-size: 15px;
-}
-
-.paper42-table input.data:focus {
-  border-color: #000;
-  box-shadow: none;
-  outline: 1px dashed #777;
-  outline-offset: 2px;
-}
-
-.paper42-table input.data[readonly] {
-  border-bottom-style: double;
-  background: transparent;
-  color: #000;
-  font-weight: 700;
-}
-
-.paper42-table .paper42-result-row td {
-  font-weight: 700;
-}
-
-.paper42-table .paper42-wide-result {
-  width: 45%;
-}
-
-.paper42-hint {
-  margin: 6px 0 0;
-  color: #333;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-@media (max-width: 860px) {
-  .paper42-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .paper42-table {
-    min-width: 650px;
-  }
-}
-
-@media print {
-  .paper42-section {
-    break-inside: avoid;
-    margin-top: 10px;
-  }
-
-  .paper42-table th,
-  .paper42-table td {
-    height: 35px;
-    padding: 4px 7px;
-    border-color: #000;
-  }
-
-  .paper42-table input.data,
-  .paper42-table input.data[readonly] {
-    border-bottom: 1px solid #000;
-    background: transparent;
-    color: #000;
-  }
-
-  .paper42-hint {
-    display: none;
-  }
+@media print{
+.paper42-section{break-inside:avoid;margin-top:10px;}
+.paper42-table th,.paper42-table td{height:35px;padding:4px 7px;border-color:#000;}
+.paper42-table input.data,.paper42-table input.data[readonly]{border-bottom:1px solid #000;background:transparent;color:#000;}
 }
