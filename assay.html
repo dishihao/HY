@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#222222" />
+  <meta name="description" content="按纸质检验记录布局制作的气相含量测定计算页面。" />
+  <title>气相含量测定计算</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="paper42.css?v=20260725-6" />
+</head>
+<body>
+  <header class="toolbar no-print">
+    <div class="toolbar-title">
+      <span id="appTitle">气相含量测定计算</span>
+      <span id="saveState" class="save-state">刷新即清空</span>
+    </div>
+    <div class="toolbar-actions">
+      <a class="btn btn-ghost" href="index.html">项目首页</a>
+      <button class="btn btn-ghost" id="exampleBtn" type="button">载入示例数据</button>
+      <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
+      <button class="btn btn-primary" id="printBtn" type="button">打印 / 保存PDF</button>
+      <button class="btn btn-danger" id="resetBtn" type="button">清空数据</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <article class="paper assay-record" id="paper">
+      <h1 class="record-title">4.2　数据记录及计算公式</h1>
+
+      <section class="paper-block">
+        <h2 class="paper-subtitle">对照品数据：</h2>
+        <div class="paper-table-scroll">
+          <table class="paper-record-table standard-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="label-col"><col class="value-col"></colgroup>
+            <tbody>
+              <tr><th>对照品批号</th><td><input class="paper-input text-left" data-key="refBatch"></td><th>纯度 S（%）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="purity"></td></tr>
+              <tr><th>对照品来源</th><td><input class="paper-input text-left" data-key="refSource"></td><th>干燥条件</th><td><input class="paper-input text-left" data-key="dryCondition"></td></tr>
+              <tr><th>对照品浓度 C<sub>对</sub>（mg/ml）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="stdConcentration"></td><th>进样量 V<sub>对</sub>（μl）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="stdInjection" value="1"></td></tr>
+              <tr class="peak-row">
+                <th>对照品峰面积 A<sub>对</sub><br>（连续5针）</th>
+                <td colspan="3" class="peak-cell"><div class="paper-peak-grid">
+                  <input class="paper-input numeric" inputmode="decimal" data-key="stdPeak1" aria-label="对照品峰面积第1针">
+                  <input class="paper-input numeric" inputmode="decimal" data-key="stdPeak2" aria-label="对照品峰面积第2针">
+                  <input class="paper-input numeric" inputmode="decimal" data-key="stdPeak3" aria-label="对照品峰面积第3针">
+                  <input class="paper-input numeric" inputmode="decimal" data-key="stdPeak4" aria-label="对照品峰面积第4针">
+                  <input class="paper-input numeric" inputmode="decimal" data-key="stdPeak5" aria-label="对照品峰面积第5针">
+                </div></td>
+              </tr>
+              <tr><th>对照品平均峰面积 Ā<sub>对</sub></th><td><input id="stdAverage" class="paper-input paper-output" readonly value="—"></td><th>RSD（%）</th><td><input id="rsdOutput" class="paper-input paper-output" readonly value="—"></td></tr>
+              <tr><th>RSD限度（%）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="rsdLimit" value="2.0"></td><th>系统适用性</th><td><span id="rsdStatus" class="status pending paper-status">待输入</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="paper-block">
+        <h2 class="paper-subtitle">供试品测量：</h2>
+        <div class="paper-table-scroll">
+          <table class="paper-record-table sample-table">
+            <colgroup><col class="sample-label-col"><col class="sample-value-col"><col class="sample-value-col"></colgroup>
+            <thead><tr><th>测定项目</th><th>样品1</th><th>样品2</th></tr></thead>
+            <tbody>
+              <tr><th>样品编号</th><td><input class="paper-input" data-key="sampleNo1" value="1"></td><td><input class="paper-input" data-key="sampleNo2" value="2"></td></tr>
+              <tr><th>水分 Q（%）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="moisture1"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="moisture2"></td></tr>
+              <tr><th>取样量 W<sub>样</sub>（g）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="weight1"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="weight2"></td></tr>
+              <tr><th>样品稀释倍数 f<sub>样</sub></th><td><input class="paper-input numeric" inputmode="decimal" data-key="dilution1" value="50"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="dilution2" value="50"></td></tr>
+              <tr><th>进样量 V<sub>样</sub>（μl）</th><td><input class="paper-input numeric" inputmode="decimal" data-key="sampleInjection1" value="1"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="sampleInjection2" value="1"></td></tr>
+              <tr><th rowspan="2">样品峰面积 A<sub>样</sub></th><td><input class="paper-input numeric" inputmode="decimal" data-key="sample1Peak1"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="sample2Peak1"></td></tr>
+              <tr><td><input class="paper-input numeric" inputmode="decimal" data-key="sample1Peak2"></td><td><input class="paper-input numeric" inputmode="decimal" data-key="sample2Peak2"></td></tr>
+              <tr class="result-row"><th>样品平均峰面积 Ā<sub>样</sub></th><td><input id="sampleAvg1" class="paper-input paper-output" readonly value="—"></td><td><input id="sampleAvg2" class="paper-input paper-output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>含量 X（%）</th><td><input id="content1" class="paper-input paper-output" readonly value="—"></td><td><input id="content2" class="paper-input paper-output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>相对偏差（%）</th><td colspan="2"><input id="relativeDeviation" class="paper-input paper-output centered-output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>平均含量 X̄（%）</th><td colspan="2"><input id="averageContent" class="paper-input paper-output centered-output" readonly value="—"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="calculation-sheet">
+        <h2 class="paper-subtitle">计算：</h2>
+        <div class="formula-line"><span class="formula-label">X =</span><span class="fraction"><span>Ā × C<sub>对</sub> × f<sub>样</sub> × V<sub>对</sub></span><span>Ā<sub>对</sub> × W<sub>样</sub> × 1000 ×（1－Q%）× V<sub>样</sub></span></span><span>× 100%</span></div>
+        <div class="paper-lines">
+          <div class="paper-result-line"><span>X<sub>1</sub>＝</span><strong id="summaryX1">—</strong><span>%</span></div>
+          <div class="paper-result-line"><span>X<sub>2</sub>＝</span><strong id="summaryX2">—</strong><span>%</span></div>
+          <div class="paper-result-line"><span>相对偏差＝</span><strong id="summaryRd">—</strong><span>%</span></div>
+          <div class="paper-result-line"><span>平均含量＝</span><strong id="summaryAvg">—</strong><span>%</span></div>
+        </div>
+        <div class="standard-line"><span>项目 / 测定成分：</span><input class="line-input analyte-input" data-key="analyteName"></div>
+        <div class="standard-line standard-controls"><span>标准规定：</span><select class="line-input relation-select" data-key="specRelation"><option value="min">不得少于</option><option value="max">不得高于</option></select><input class="line-input spec-input numeric" inputmode="decimal" data-key="specValue" value="0.13"><span>%</span></div>
+        <div class="standard-line"><span>标准文字：</span><input id="specText" class="line-input full-line-output" readonly value="请输入项目或测定成分。"></div>
+        <div class="rounding-note"><strong>数值修约：</strong>采用“四舍六入五成双”。RSD保留1位小数；含量X比标准规定多保留1位小数；相对偏差比标准规定少保留1位小数；平均含量与标准规定保留相同小数位。</div>
+        <table class="precision-table"><tbody><tr><th>标准规定小数位</th><td id="standardDigits">—</td><th>含量X小数位</th><td id="contentDigits">—</td></tr><tr><th>相对偏差小数位</th><td id="deviationDigits">—</td><th>平均含量小数位</th><td id="averageDigits">—</td></tr></tbody></table>
+        <div class="conclusion-block"><div>含量结果：<span id="contentStatus" class="status pending paper-status">待输入</span></div><div>系统适用性：<span id="rsdStatus2" class="status pending paper-status">待输入</span></div><div class="final-conclusion">结论：本品按规定检验，结果 <span id="overallStatus" class="status pending paper-status">待输入</span>。</div></div>
+      </section>
+
+      <div class="hidden-summary" aria-hidden="true"><span id="summaryAnalyte">—</span><span id="summaryStdAvg">—</span><span id="summaryRsd">—</span></div>
+      <footer class="paper-footer"><span>合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</span><span>本页数据刷新后清空</span></footer>
+    </article>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>try{localStorage.removeItem("hy-gc-assay-calculator-v2");localStorage.removeItem("hy-mint-assay-calculator-v1");}catch(_){}</script>
+  <script src="app.js?v=20260725-3"></script>
+  <script>try{applyState(DEFAULTS);const stateLabel=document.getElementById("saveState");const keepTemporaryLabel=()=>{if(stateLabel)stateLabel.textContent="刷新即清空";};keepTemporaryLabel();document.addEventListener("input",()=>setTimeout(keepTemporaryLabel,0),true);document.addEventListener("change",()=>setTimeout(keepTemporaryLabel,0),true);}catch(_){}</script>
+</body>
+</html>
