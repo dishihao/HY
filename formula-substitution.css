@@ -1,1 +1,277 @@
-.formula-substitution{margin:10px 0 14px;padding:10px 12px;border:1px solid #000;background:#fff;break-inside:avoid}.formula-substitution-title{margin:0 0 8px;font-weight:700}.formula-substitution-empty{color:#555;font-family:"SimSun","Songti SC",serif}.formula-equation-box,.formula-substitution-row{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;font-family:"Times New Roman","SimSun",serif;font-size:16px;font-variant-numeric:tabular-nums}.formula-substitution-row{margin:0;padding:8px 4px;border-bottom:1px dotted #888;line-height:1.35;overflow-wrap:anywhere}.formula-substitution-row:last-child{border-bottom:0}.calc-label{white-space:nowrap}.calc-fraction{display:inline-flex;min-width:190px;max-width:100%;flex-direction:column;align-items:stretch;justify-content:center;text-align:center;vertical-align:middle}.calc-fraction>.calc-numerator{display:block;padding:0 8px 3px;border-bottom:1.5px solid #000;white-space:normal}.calc-fraction>.calc-denominator{display:block;padding:3px 8px 0;white-space:normal}.calc-result{font-weight:700;white-space:nowrap}.calc-radical{display:inline-flex;align-items:center}.calc-radical-sign{font-size:1.55em;line-height:1}.calc-radicand{padding:1px 4px;border-top:1px solid #000}.calc-divider{white-space:nowrap}@media(max-width:760px){.formula-substitution{padding:8px}.formula-equation-box,.formula-substitution-row{font-size:14px;gap:5px}.calc-fraction{min-width:150px}.calc-fraction>.calc-numerator,.calc-fraction>.calc-denominator{padding-left:5px;padding-right:5px}}@media print{.formula-substitution{margin:6px 0 8px;padding:6px 8px}.formula-equation-box,.formula-substitution-row{font-size:11.5px;gap:4px}.formula-substitution-row{padding:4px 2px}.calc-fraction{min-width:125px}.calc-fraction>.calc-numerator{padding-bottom:2px}.calc-fraction>.calc-denominator{padding-top:2px}}
+/* 公式及数据代入：使用与纸质记录一致的横向分式。 */
+.formula-substitution {
+  margin: 12px 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #000;
+  background: #fff;
+  break-inside: avoid;
+}
+
+.formula-substitution-title {
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+.formula-substitution-empty {
+  color: #555;
+  font-family: "SimSun", "Songti SC", serif;
+}
+
+.formula-equation-box,
+.formula-substitution-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: "Times New Roman", "SimSun", serif;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+.formula-substitution-row {
+  margin: 0;
+  padding: 10px 4px;
+  border-bottom: 1px dotted #888;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.formula-substitution-row:last-child {
+  border-bottom: 0;
+}
+
+.calc-label,
+.calc-divider,
+.calc-result {
+  white-space: nowrap;
+}
+
+.calc-fraction {
+  display: inline-flex;
+  min-width: 210px;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.calc-fraction > .calc-numerator {
+  display: block;
+  padding: 0 10px 4px;
+  border-bottom: 1.7px solid #000;
+  white-space: normal;
+}
+
+.calc-fraction > .calc-denominator {
+  display: block;
+  padding: 4px 10px 0;
+  white-space: normal;
+}
+
+.calc-result {
+  font-weight: 700;
+}
+
+.calc-radical {
+  display: inline-flex;
+  align-items: center;
+}
+
+.calc-radical-sign {
+  font-size: 1.55em;
+  line-height: 1;
+}
+
+.calc-radicand {
+  padding: 1px 4px;
+  border-top: 1px solid #000;
+}
+
+/* 含量测定主公式：复刻用户示例图中的大号横向分式。 */
+.calculation-sheet > .formula-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 18px;
+  min-height: 142px;
+  padding: 14px 2px 18px;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: "Times New Roman", "SimSun", serif;
+  font-size: clamp(27px, 3.7vw, 43px);
+  line-height: 1.16;
+}
+
+.calculation-sheet > .formula-line .formula-label {
+  flex: 0 0 auto;
+  font-size: 1.18em;
+}
+
+.calculation-sheet > .formula-line .fraction {
+  display: inline-flex;
+  min-width: 660px;
+  flex: 1 0 660px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  text-align: center;
+}
+
+.calculation-sheet > .formula-line .fraction > span:first-child {
+  padding: 0 18px 8px;
+  border-bottom: 2.2px solid #000;
+}
+
+.calculation-sheet > .formula-line .fraction > span:last-child {
+  padding: 8px 18px 0;
+}
+
+/* X1、X2 数据代入与主公式使用同一排版，不压缩成普通文本。 */
+.formula-substitution-row.formula-assay-content {
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 14px;
+  min-height: 126px;
+  padding: 16px 2px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.16;
+}
+
+.formula-assay-content .calc-label {
+  flex: 0 0 auto;
+  font-size: 1.12em;
+}
+
+.formula-assay-content .calc-fraction {
+  min-width: 650px;
+  flex: 1 0 650px;
+  font-size: .92em;
+}
+
+.formula-assay-content .calc-fraction > .calc-numerator {
+  padding: 0 15px 7px;
+  border-bottom-width: 2px;
+}
+
+.formula-assay-content .calc-fraction > .calc-denominator {
+  padding: 7px 15px 0;
+}
+
+.formula-assay-content .calc-result {
+  font-size: .92em;
+}
+
+@media (max-width: 760px) {
+  .formula-substitution {
+    padding: 9px;
+  }
+
+  .formula-equation-box,
+  .formula-substitution-row {
+    font-size: 14px;
+    gap: 5px;
+  }
+
+  .calc-fraction {
+    min-width: 150px;
+  }
+
+  .calc-fraction > .calc-numerator,
+  .calc-fraction > .calc-denominator {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .calculation-sheet > .formula-line {
+    gap: 12px;
+    min-height: 112px;
+    font-size: 25px;
+  }
+
+  .calculation-sheet > .formula-line .fraction {
+    min-width: 620px;
+    flex-basis: 620px;
+  }
+
+  .formula-substitution-row.formula-assay-content {
+    gap: 10px;
+    min-height: 108px;
+    font-size: 22px;
+  }
+
+  .formula-assay-content .calc-fraction {
+    min-width: 610px;
+    flex-basis: 610px;
+  }
+}
+
+@media print {
+  .formula-substitution {
+    margin: 6px 0 8px;
+    padding: 6px 8px;
+  }
+
+  .formula-equation-box,
+  .formula-substitution-row {
+    font-size: 11.5px;
+    gap: 4px;
+  }
+
+  .formula-substitution-row {
+    padding: 4px 2px;
+  }
+
+  .calc-fraction {
+    min-width: 125px;
+  }
+
+  .calc-fraction > .calc-numerator {
+    padding-bottom: 2px;
+  }
+
+  .calc-fraction > .calc-denominator {
+    padding-top: 2px;
+  }
+
+  .calculation-sheet > .formula-line {
+    min-height: 80px;
+    padding: 5px 0 8px;
+    gap: 9px;
+    font-size: 19px;
+    overflow: visible;
+  }
+
+  .calculation-sheet > .formula-line .fraction {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .calculation-sheet > .formula-line .fraction > span:first-child {
+    padding: 0 8px 4px;
+    border-bottom-width: 1.5px;
+  }
+
+  .calculation-sheet > .formula-line .fraction > span:last-child {
+    padding: 4px 8px 0;
+  }
+
+  .formula-substitution-row.formula-assay-content {
+    min-height: 72px;
+    padding: 6px 0;
+    gap: 7px;
+    overflow: visible;
+    font-size: 15px;
+  }
+
+  .formula-assay-content .calc-fraction {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+}
