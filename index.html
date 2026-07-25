@@ -4,10 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#155e75" />
-  <meta name="description" content="气相含量测定计算工具：纸质记录式布局、四舍六入五成双、自动保存、打印即用。" />
+  <meta name="description" content="气相含量测定计算工具：纸质记录式布局、四舍六入五成双、打印即用。" />
   <link rel="manifest" href="manifest.webmanifest" />
   <title>气相含量测定计算</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="paper42.css?v=20260725-1" />
 </head>
 <body>
   <header class="toolbar no-print">
@@ -106,79 +107,79 @@
         </div>
       </section>
 
-      <section class="section">
-        <h2 class="section-title"><span class="section-no">3</span>供试品测定</h2>
-        <div class="table-scroll">
-          <table class="form-table">
+      <section class="paper42-section">
+        <h2 class="paper42-title">4.2　供试品测定</h2>
+        <div class="paper42-scroll">
+          <table class="paper42-table">
+            <colgroup>
+              <col class="paper42-label-col">
+              <col class="paper42-value-col">
+              <col class="paper42-value-col">
+            </colgroup>
             <thead>
               <tr>
-                <th>项目</th>
-                <th>样品 1</th>
-                <th>样品 2</th>
+                <th>测定项目</th>
+                <th>样品1</th>
+                <th>样品2</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="sub-label">样品编号</td>
-                <td><input class="data" data-key="sampleNo1" value="1"></td>
-                <td><input class="data" data-key="sampleNo2" value="2"></td>
+                <td class="paper42-row-label">样品编号</td>
+                <td><input class="data" data-key="sampleNo1" value="1" aria-label="样品1编号"></td>
+                <td><input class="data" data-key="sampleNo2" value="2" aria-label="样品2编号"></td>
               </tr>
               <tr>
-                <td class="sub-label">水分 Q（%）</td>
+                <td class="paper42-row-label">水分 Q（%）</td>
                 <td><input class="data numeric" inputmode="decimal" data-key="moisture1" placeholder="请输入"></td>
                 <td><input class="data numeric" inputmode="decimal" data-key="moisture2" placeholder="默认同样品1"></td>
               </tr>
               <tr>
-                <td class="sub-label">取样量 W<sub>样</sub>（g）</td>
+                <td class="paper42-row-label">取样量 W<sub>样</sub>（g）</td>
                 <td><input class="data numeric" inputmode="decimal" data-key="weight1" placeholder="请输入"></td>
                 <td><input class="data numeric" inputmode="decimal" data-key="weight2" placeholder="请输入"></td>
               </tr>
               <tr>
-                <td class="sub-label">样品稀释倍数 f<sub>样</sub></td>
+                <td class="paper42-row-label">样品稀释倍数 f<sub>样</sub></td>
                 <td><input class="data numeric" inputmode="decimal" data-key="dilution1" value="50"></td>
                 <td><input class="data numeric" inputmode="decimal" data-key="dilution2" value="50"></td>
               </tr>
               <tr>
-                <td class="sub-label">进样量 V<sub>样</sub>（μl）</td>
+                <td class="paper42-row-label">进样量 V<sub>样</sub>（μl）</td>
                 <td><input class="data numeric" inputmode="decimal" data-key="sampleInjection1" value="1"></td>
                 <td><input class="data numeric" inputmode="decimal" data-key="sampleInjection2" value="1"></td>
               </tr>
               <tr>
-                <td class="sub-label">样品峰面积 A<sub>样</sub></td>
-                <td>
-                  <div class="sample-peak-grid">
-                    <input class="data numeric" inputmode="decimal" data-key="sample1Peak1" aria-label="样品1峰面积1" placeholder="第1针">
-                    <input class="data numeric" inputmode="decimal" data-key="sample1Peak2" aria-label="样品1峰面积2" placeholder="第2针">
-                  </div>
-                </td>
-                <td>
-                  <div class="sample-peak-grid">
-                    <input class="data numeric" inputmode="decimal" data-key="sample2Peak1" aria-label="样品2峰面积1" placeholder="第1针">
-                    <input class="data numeric" inputmode="decimal" data-key="sample2Peak2" aria-label="样品2峰面积2" placeholder="第2针">
-                  </div>
-                </td>
+                <td class="paper42-row-label" rowspan="2">样品峰面积 A<sub>样</sub></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sample1Peak1" aria-label="样品1峰面积第1针" placeholder="第1针"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sample2Peak1" aria-label="样品2峰面积第1针" placeholder="第1针"></td>
               </tr>
               <tr>
-                <td class="sub-label">样品平均峰面积 Ā</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sample1Peak2" aria-label="样品1峰面积第2针" placeholder="第2针"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sample2Peak2" aria-label="样品2峰面积第2针" placeholder="第2针"></td>
+              </tr>
+              <tr class="paper42-result-row">
+                <td class="paper42-row-label">样品平均峰面积 Ā<sub>样</sub></td>
                 <td><input id="sampleAvg1" class="data" readonly value="—"></td>
                 <td><input id="sampleAvg2" class="data" readonly value="—"></td>
               </tr>
-              <tr>
-                <td class="sub-label">含量 X（%）</td>
+              <tr class="paper42-result-row">
+                <td class="paper42-row-label">含量 X（%）</td>
                 <td><input id="content1" class="data" readonly value="—"></td>
                 <td><input id="content2" class="data" readonly value="—"></td>
               </tr>
-              <tr>
-                <td class="sub-label">相对偏差（%）</td>
-                <td colspan="2"><input id="relativeDeviation" class="data" readonly value="—"></td>
+              <tr class="paper42-result-row">
+                <td class="paper42-row-label">相对偏差（%）</td>
+                <td colspan="2"><input id="relativeDeviation" class="data paper42-wide-result" readonly value="—"></td>
               </tr>
-              <tr>
-                <td class="sub-label">平均含量 X̄（%）</td>
-                <td colspan="2"><input id="averageContent" class="data" readonly value="—"></td>
+              <tr class="paper42-result-row">
+                <td class="paper42-row-label">平均含量 X̄（%）</td>
+                <td colspan="2"><input id="averageContent" class="data paper42-wide-result" readonly value="—"></td>
               </tr>
             </tbody>
           </table>
         </div>
+        <p class="paper42-hint">填写区域采用纸质记录式横线，计算结果仍按原有公式和修约规则自动生成。</p>
       </section>
 
       <section class="section">
@@ -269,8 +270,6 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // 每次打开或刷新页面时，只清除本工具保存过的数据。
-    // 不使用 localStorage.clear()，避免影响同一域名下的其他网页工具。
     try {
       localStorage.removeItem("hy-gc-assay-calculator-v2");
       localStorage.removeItem("hy-mint-assay-calculator-v1");
@@ -278,7 +277,6 @@
   </script>
   <script src="app.js?v=20260725-2"></script>
   <script>
-    // app.js 加载后再次恢复默认值，防止浏览器自动恢复表单内容。
     try {
       applyState(DEFAULTS);
       const stateLabel = document.getElementById("saveState");
