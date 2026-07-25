@@ -33,11 +33,16 @@ X = (A样平均 × C对 × f样 × V对)
 |X1(已修约) - X2(已修约)| / [X1(已修约) + X2(已修约)] × 100%
 ```
 
-## 部署
+## GitHub Pages 发布设置
 
-仓库内已配置 GitHub Pages Actions。推送到 `main` 后会自动部署。
+本项目为纯静态网页，使用 `main` 分支根目录直接发布：
 
-访问地址预计为：
+1. 进入仓库 `Settings` → `Pages`
+2. `Source` 选择 `Deploy from a branch`
+3. 分支选择 `main`
+4. 文件夹选择 `/(root)`，点击 `Save`
+
+访问地址：
 
 ```text
 https://dishihao.github.io/HY/
