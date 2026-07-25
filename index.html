@@ -4,19 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#155e75" />
-  <meta name="description" content="薄荷含量测定计算工具：纸质记录式布局、四舍六入五成双、自动保存、打印即用。" />
+  <meta name="description" content="气相含量测定计算工具：纸质记录式布局、四舍六入五成双、自动保存、打印即用。" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <title>薄荷含量测定计算</title>
+  <title>气相含量测定计算</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="toolbar no-print">
     <div class="toolbar-title">
-      <span>薄荷含量测定计算</span>
+      <span id="appTitle">气相含量测定计算</span>
       <span id="saveState" class="save-state">已自动保存</span>
     </div>
     <div class="toolbar-actions">
-      <button class="btn btn-ghost" id="exampleBtn" type="button">载入纸质示例</button>
+      <button class="btn btn-ghost" id="exampleBtn" type="button">载入示例数据</button>
       <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
       <button class="btn btn-primary" id="printBtn" type="button">打印 / 保存PDF</button>
       <button class="btn btn-danger" id="resetBtn" type="button">清空数据</button>
@@ -25,12 +25,6 @@
 
   <main class="app-shell">
     <article class="paper" id="paper">
-      <div class="record-head">
-        <div class="record-title">薄荷成品检验原始记录</div>
-        <div>编号：<input class="data text-left" data-key="recordNo" value="TS-45-06401-a" aria-label="记录编号"></div>
-        <div>版本：<input class="data" data-key="version" value="03" aria-label="版本"></div>
-      </div>
-
       <p class="method-title">【含量测定】照气相色谱法测定。</p>
 
       <section class="section">
@@ -40,15 +34,15 @@
             <tbody>
               <tr>
                 <td class="label">电子天平型号</td>
-                <td><input class="data" data-key="balanceModel" value="AVW120D"></td>
+                <td><strong>AVW120D</strong></td>
                 <td class="label">编号</td>
-                <td><input class="data" data-key="balanceNo" value="HY-TP-09"></td>
+                <td><strong>HY-TP-09</strong></td>
               </tr>
               <tr>
                 <td class="label">气相色谱仪型号</td>
-                <td><input class="data" data-key="gcModel" value="8860"></td>
+                <td><strong>8860</strong></td>
                 <td class="label">编号</td>
-                <td><input class="data" data-key="gcNo" value="HY-QX-01"></td>
+                <td><strong>HY-QX-01</strong></td>
               </tr>
               <tr>
                 <td class="label">RSD限度（%）</td>
@@ -59,7 +53,7 @@
             </tbody>
           </table>
         </div>
-        <p class="note">固定相、程序升温、进样口温度、检测器温度及分流条件按检验记录执行；本页面负责数据记录与含量计算。</p>
+        <p class="note">固定相、程序升温、进样口温度、检测器温度及分流条件按对应检验记录执行；本页面负责数据记录与含量计算。</p>
       </section>
 
       <section class="section">
@@ -218,6 +212,10 @@
           <table class="form-table">
             <tbody>
               <tr>
+                <td class="label">项目 / 测定成分</td>
+                <td colspan="3"><input class="data text-left" data-key="analyteName" placeholder="如：薄荷脑、桉油精、桂皮醛"></td>
+              </tr>
+              <tr>
                 <td class="label">判定关系</td>
                 <td>
                   <select class="data" data-key="specRelation">
@@ -233,7 +231,7 @@
               </tr>
               <tr>
                 <td class="label">标准文字</td>
-                <td colspan="3"><input id="specText" class="data text-left" readonly value="本品按干燥品计算，含薄荷脑不得少于0.13%。"></td>
+                <td colspan="3"><input id="specText" class="data text-left" readonly value="请输入项目或测定成分。"></td>
               </tr>
             </tbody>
           </table>
@@ -249,6 +247,7 @@
           <div class="result-card">
             <h3>抄写摘要</h3>
             <dl class="summary-list">
+              <dt>项目 / 测定成分</dt><dd id="summaryAnalyte">—</dd>
               <dt>对照品平均峰面积</dt><dd id="summaryStdAvg">—</dd>
               <dt>RSD（%）</dt><dd id="summaryRsd">—</dd>
               <dt>X₁（%）</dt><dd id="summaryX1">—</dd>
