@@ -13,7 +13,7 @@
   <header class="toolbar no-print">
     <div class="toolbar-title">
       <span id="appTitle">气相含量测定计算</span>
-      <span id="saveState" class="save-state">已自动保存</span>
+      <span id="saveState" class="save-state">刷新即清空</span>
     </div>
     <div class="toolbar-actions">
       <button class="btn btn-ghost" id="exampleBtn" type="button">载入示例数据</button>
@@ -261,13 +261,34 @@
 
       <footer class="paper-footer">
         <span>合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</span>
-        <span>本页数据仅保存在当前浏览器</span>
+        <span>本页数据仅用于当前页面，刷新后清空</span>
       </footer>
     </article>
   </main>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script src="app.js"></script>
+  <script>
+    // 每次打开或刷新页面时，只清除本工具保存过的数据。
+    // 不使用 localStorage.clear()，避免影响同一域名下的其他网页工具。
+    try {
+      localStorage.removeItem("hy-gc-assay-calculator-v2");
+      localStorage.removeItem("hy-mint-assay-calculator-v1");
+    } catch (_) {}
+  </script>
+  <script src="app.js?v=20260725-2"></script>
+  <script>
+    // app.js 加载后再次恢复默认值，防止浏览器自动恢复表单内容。
+    try {
+      applyState(DEFAULTS);
+      const stateLabel = document.getElementById("saveState");
+      const keepTemporaryLabel = () => {
+        if (stateLabel) stateLabel.textContent = "刷新即清空";
+      };
+      keepTemporaryLabel();
+      document.addEventListener("input", () => setTimeout(keepTemporaryLabel, 0), true);
+      document.addEventListener("change", () => setTimeout(keepTemporaryLabel, 0), true);
+    } catch (_) {}
+  </script>
 </body>
 </html>
