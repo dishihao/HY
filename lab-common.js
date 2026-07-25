@@ -68,7 +68,6 @@ const config = configurations[method] || { defaults: {}, example: {} };
 const defaults = config.defaults;
 
 function el(id) { return document.getElementById(id); }
-function raw(id) { return el(id)?.value?.trim() ?? ""; }
 function fieldRaw(key) { return document.querySelector(`[data-field="${key}"]`)?.value?.trim() ?? ""; }
 function numberFrom(value) { return value !== "" && Number.isFinite(Number(value)) ? Number(value) : null; }
 function fieldNumber(key) { return numberFrom(fieldRaw(key)); }
@@ -115,8 +114,7 @@ function calculateOne(index) {
   if (method === "impurities") {
     const sampleMass = fieldNumber(`sampleMass${index}`);
     const impurityMass = fieldNumber(`impurityMass${index}`);
-    if ([sampleMass, impurityMass].some(value => value === null)) return null;
-    if (sampleMass <= 0 || impurityMass < 0) return null;
+    if ([sampleMass, impurityMass].some(value => value === null) || sampleMass <= 0 || impurityMass < 0) return null;
     return impurityMass / sampleMass * 100;
   }
 
@@ -145,7 +143,11 @@ function calculateOne(index) {
     const factor = fieldNumber("factor");
     const mass = fieldNumber(`mass${index}`);
     const volume = fieldNumber(`volume${index}`);
-    if ([blank, factor, mass, volume].some(value => value === null)) return null;
+    if ([blank, factor, mass, volume].some(value => value === null)) {
+      setValue(`sampleWeight${index}`, "—");
+      setValue(`change${index}`, "—");
+      return null;
+    }
     const correctedVolume = volume - blank;
     if (mass <= 0 || factor <= 0 || correctedVolume < 0) return null;
     setValue(`sampleWeight${index}`, roundHalfEven(mass, 3));
@@ -187,10 +189,8 @@ function calculate() {
   setText("summaryRd", relativeText);
 
   let averageText = "—";
-  let averageRaw = null;
   if (resultRaw1 !== null && resultRaw2 !== null) {
-    averageRaw = (resultRaw1 + resultRaw2) / 2;
-    averageText = roundHalfEven(averageRaw, averagePlaces);
+    averageText = roundHalfEven((resultRaw1 + resultRaw2) / 2, averagePlaces);
   }
   setValue("average", averageText);
   setText("summaryAvg", averageText);
@@ -199,8 +199,9 @@ function calculate() {
   const relationText = relation === "min" ? "不得少于" : (method === "sulfur" ? "不得高于" : "不得过");
   setValue("standardText", spec === null ? "请输入标准规定。" : `${projectName}${relationText}${specRaw}${unit}。`);
 
+  const displayedAverage = averageText === "—" ? null : Number(averageText);
   let pass = null;
-  if (averageRaw !== null && spec !== null) pass = relation === "min" ? averageRaw >= spec : averageRaw <= spec;
+  if (displayedAverage !== null && spec !== null) pass = relation === "min" ? displayedAverage >= spec : displayedAverage <= spec;
   setStatus("resultStatus", pass === null ? "pending" : pass ? "ok" : "bad", pass === null ? "待输入" : pass ? "符合" : "不符合");
   setStatus("overallStatus", pass === null ? "pending" : pass ? "ok" : "bad", pass === null ? "待输入" : pass ? "符合规定" : "不符合规定");
 }
