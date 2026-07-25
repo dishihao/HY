@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#155e75" />
+  <meta name="description" content="薄荷含量测定计算工具：纸质记录式布局、四舍六入五成双、自动保存、打印即用。" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>薄荷含量测定计算</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="toolbar no-print">
+    <div class="toolbar-title">
+      <span>薄荷含量测定计算</span>
+      <span id="saveState" class="save-state">已自动保存</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-ghost" id="exampleBtn" type="button">载入纸质示例</button>
+      <button class="btn btn-ghost" id="copyBtn" type="button">复制结果</button>
+      <button class="btn btn-primary" id="printBtn" type="button">打印 / 保存PDF</button>
+      <button class="btn btn-danger" id="resetBtn" type="button">清空数据</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <article class="paper" id="paper">
+      <div class="record-head">
+        <div class="record-title">薄荷成品检验原始记录</div>
+        <div>编号：<input class="data text-left" data-key="recordNo" value="TS-45-06401-a" aria-label="记录编号"></div>
+        <div>版本：<input class="data" data-key="version" value="03" aria-label="版本"></div>
+      </div>
+
+      <p class="method-title">【含量测定】照气相色谱法测定。</p>
+
+      <section class="section">
+        <h2 class="section-title"><span class="section-no">1</span>仪器与测定条件</h2>
+        <div class="table-scroll">
+          <table class="form-table">
+            <tbody>
+              <tr>
+                <td class="label">电子天平型号</td>
+                <td><input class="data" data-key="balanceModel" value="AVW120D"></td>
+                <td class="label">编号</td>
+                <td><input class="data" data-key="balanceNo" value="HY-TP-09"></td>
+              </tr>
+              <tr>
+                <td class="label">气相色谱仪型号</td>
+                <td><input class="data" data-key="gcModel" value="8860"></td>
+                <td class="label">编号</td>
+                <td><input class="data" data-key="gcNo" value="HY-QX-01"></td>
+              </tr>
+              <tr>
+                <td class="label">RSD限度（%）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="rsdLimit" value="2.0"></td>
+                <td class="label">计算规则</td>
+                <td>标准偏差采用样本标准偏差（n-1）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">固定相、程序升温、进样口温度、检测器温度及分流条件按检验记录执行；本页面负责数据记录与含量计算。</p>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title"><span class="section-no">2</span>对照品与系统适用性试验</h2>
+        <div class="table-scroll">
+          <table class="form-table">
+            <tbody>
+              <tr>
+                <td class="label">对照品批号</td>
+                <td><input class="data text-left" data-key="refBatch" placeholder="请输入"></td>
+                <td class="label">纯度 S（%）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="purity" placeholder="如 99.8"></td>
+              </tr>
+              <tr>
+                <td class="label">对照品来源</td>
+                <td><input class="data text-left" data-key="refSource" placeholder="请输入"></td>
+                <td class="label">干燥条件</td>
+                <td><input class="data text-left" data-key="dryCondition" placeholder="请输入"></td>
+              </tr>
+              <tr>
+                <td class="label">对照品浓度 C<sub>对</sub>（mg/ml）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="stdConcentration" placeholder="请输入"></td>
+                <td class="label">对照品进样量 V<sub>对</sub>（μl）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="stdInjection" value="1"></td>
+              </tr>
+              <tr>
+                <td class="label">对照品峰面积 A<sub>对</sub>（连续5针）</td>
+                <td colspan="3">
+                  <div class="peak-grid">
+                    <input class="data numeric" inputmode="decimal" data-key="stdPeak1" aria-label="对照峰面积1" placeholder="第1针">
+                    <input class="data numeric" inputmode="decimal" data-key="stdPeak2" aria-label="对照峰面积2" placeholder="第2针">
+                    <input class="data numeric" inputmode="decimal" data-key="stdPeak3" aria-label="对照峰面积3" placeholder="第3针">
+                    <input class="data numeric" inputmode="decimal" data-key="stdPeak4" aria-label="对照峰面积4" placeholder="第4针">
+                    <input class="data numeric" inputmode="decimal" data-key="stdPeak5" aria-label="对照峰面积5" placeholder="第5针">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">对照品平均峰面积 Ā<sub>对</sub></td>
+                <td colspan="3"><input id="stdAverage" class="data" readonly value="—"></td>
+              </tr>
+              <tr>
+                <td class="label">RSD（%）</td>
+                <td><input id="rsdOutput" class="data" readonly value="—"></td>
+                <td class="label">系统适用性</td>
+                <td><span id="rsdStatus" class="status pending">待输入</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title"><span class="section-no">3</span>供试品测定</h2>
+        <div class="table-scroll">
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th>项目</th>
+                <th>样品 1</th>
+                <th>样品 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="sub-label">样品编号</td>
+                <td><input class="data" data-key="sampleNo1" value="1"></td>
+                <td><input class="data" data-key="sampleNo2" value="2"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">水分 Q（%）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="moisture1" placeholder="请输入"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="moisture2" placeholder="默认同样品1"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">取样量 W<sub>样</sub>（g）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="weight1" placeholder="请输入"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="weight2" placeholder="请输入"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">样品稀释倍数 f<sub>样</sub></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="dilution1" value="50"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="dilution2" value="50"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">进样量 V<sub>样</sub>（μl）</td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sampleInjection1" value="1"></td>
+                <td><input class="data numeric" inputmode="decimal" data-key="sampleInjection2" value="1"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">样品峰面积 A<sub>样</sub></td>
+                <td>
+                  <div class="sample-peak-grid">
+                    <input class="data numeric" inputmode="decimal" data-key="sample1Peak1" aria-label="样品1峰面积1" placeholder="第1针">
+                    <input class="data numeric" inputmode="decimal" data-key="sample1Peak2" aria-label="样品1峰面积2" placeholder="第2针">
+                  </div>
+                </td>
+                <td>
+                  <div class="sample-peak-grid">
+                    <input class="data numeric" inputmode="decimal" data-key="sample2Peak1" aria-label="样品2峰面积1" placeholder="第1针">
+                    <input class="data numeric" inputmode="decimal" data-key="sample2Peak2" aria-label="样品2峰面积2" placeholder="第2针">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="sub-label">样品平均峰面积 Ā</td>
+                <td><input id="sampleAvg1" class="data" readonly value="—"></td>
+                <td><input id="sampleAvg2" class="data" readonly value="—"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">含量 X（%）</td>
+                <td><input id="content1" class="data" readonly value="—"></td>
+                <td><input id="content2" class="data" readonly value="—"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">相对偏差（%）</td>
+                <td colspan="2"><input id="relativeDeviation" class="data" readonly value="—"></td>
+              </tr>
+              <tr>
+                <td class="sub-label">平均含量 X̄（%）</td>
+                <td colspan="2"><input id="averageContent" class="data" readonly value="—"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title"><span class="section-no">4</span>计算公式与数值修约</h2>
+        <div class="formula-box">
+          <div class="formula" aria-label="含量计算公式">
+            X =
+            <span class="fraction">
+              <span>Ā × C<sub>对</sub> × f<sub>样</sub> × V<sub>对</sub></span>
+              <span>Ā<sub>对</sub> × W<sub>样</sub> × 1000 × (1-Q%) × V<sub>样</sub></span>
+            </span>
+            × 100%
+          </div>
+          <div class="rule-card">
+            <strong>四舍六入五成双</strong>
+            尾数小于5舍去，大于5进位；正好为5时，后面仍有非零数字则进位，否则保留结果末位为偶数。
+          </div>
+        </div>
+        <div class="precision-strip">
+          <div class="precision-item"><b id="standardDigits">—</b><span>标准规定小数位</span></div>
+          <div class="precision-item"><b id="contentDigits">—</b><span>含量 X 小数位</span></div>
+          <div class="precision-item"><b id="deviationDigits">—</b><span>相对偏差小数位</span></div>
+          <div class="precision-item"><b id="averageDigits">—</b><span>平均含量小数位</span></div>
+        </div>
+        <p class="note">相对偏差按界面上已经修约后的 X<sub>1</sub>、X<sub>2</sub> 计算，取绝对值，不显示负号。RSD固定保留1位小数。</p>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title"><span class="section-no">5</span>标准规定与结果</h2>
+        <div class="table-scroll">
+          <table class="form-table">
+            <tbody>
+              <tr>
+                <td class="label">判定关系</td>
+                <td>
+                  <select class="data" data-key="specRelation">
+                    <option value="min">不得少于</option>
+                    <option value="max">不得高于</option>
+                  </select>
+                </td>
+                <td class="label">标准规定（%）</td>
+                <td>
+                  <input class="data numeric" inputmode="decimal" data-key="specValue" value="0.13" placeholder="如 0.13">
+                  <span class="helper">输入的末尾0也计入标准小数位，例如 0.130 为3位小数。</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="label">标准文字</td>
+                <td colspan="3"><input id="specText" class="data text-left" readonly value="本品按干燥品计算，含薄荷脑不得少于0.13%。"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-card">
+            <h3>检验判定</h3>
+            <p>含量结果：<span id="contentStatus" class="status pending">待输入</span></p>
+            <p>系统适用性：<span id="rsdStatus2" class="status pending">待输入</span></p>
+            <p><strong>结论：</strong>本品按规定检验，结果 <span id="overallStatus" class="status pending">待输入</span>。</p>
+          </div>
+          <div class="result-card">
+            <h3>抄写摘要</h3>
+            <dl class="summary-list">
+              <dt>对照品平均峰面积</dt><dd id="summaryStdAvg">—</dd>
+              <dt>RSD（%）</dt><dd id="summaryRsd">—</dd>
+              <dt>X₁（%）</dt><dd id="summaryX1">—</dd>
+              <dt>X₂（%）</dt><dd id="summaryX2">—</dd>
+              <dt>相对偏差（%）</dt><dd id="summaryRd">—</dd>
+              <dt>平均含量（%）</dt><dd id="summaryAvg">—</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <footer class="paper-footer">
+        <span>合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</span>
+        <span>本页数据仅保存在当前浏览器</span>
+      </footer>
+    </article>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
