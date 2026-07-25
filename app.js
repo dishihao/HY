@@ -355,6 +355,19 @@ function toast(message) {
   el._timer = setTimeout(() => el.classList.remove("show"), 1800);
 }
 
+async function disableLegacyCaching() {
+  try {
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(registration => registration.unregister()));
+    }
+    if ("caches" in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(key => caches.delete(key)));
+    }
+  } catch (_) {}
+}
+
 fields.forEach(el => {
   el.addEventListener("input", () => {
     calculate();
@@ -402,7 +415,4 @@ $("copyBtn").addEventListener("click", async () => {
 });
 
 load();
-
-if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
-}
+disableLegacyCaching();
