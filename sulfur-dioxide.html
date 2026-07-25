@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#222222">
+  <title>二氧化硫残留量计算</title>
+  <link rel="stylesheet" href="lab-pages.css?v=20260725-1">
+</head>
+<body data-method="sulfur" data-unit="mg/kg" data-project="二氧化硫残留量">
+  <header class="toolbar no-print">
+    <div class="toolbar-title">二氧化硫残留量计算</div>
+    <div class="toolbar-actions">
+      <a class="btn" href="index.html">项目首页</a>
+      <button class="btn" id="exampleBtn" type="button">载入示例</button>
+      <button class="btn" id="copyBtn" type="button">复制结果</button>
+      <button class="btn" id="printBtn" type="button">打印 / 保存PDF</button>
+      <button class="btn" id="resetBtn" type="button">清空数据</button>
+    </div>
+  </header>
+  <main class="app-shell">
+    <article class="paper">
+      <h1 class="record-title">二氧化硫残留量测定</h1>
+      <p class="record-subtitle">独立电子记录页。换算系数F必须按实际滴定液、标定结果及检验SOP填写，网页不预设固定化学当量。</p>
+
+      <section class="section">
+        <h2 class="section-title">方法参数：</h2>
+        <div class="table-scroll">
+          <table class="record-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="value-col"></colgroup>
+            <tbody>
+              <tr><th>空白消耗体积 V₀（mL）</th><td colspan="2"><input id="blank" class="entry wide-output" data-field="blank" data-number inputmode="decimal"></td></tr>
+              <tr><th>换算系数 F（mg SO₂/mL）</th><td colspan="2"><input id="factor" class="entry wide-output" data-field="factor" data-number inputmode="decimal"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">数据记录：</h2>
+        <div class="table-scroll">
+          <table class="record-table">
+            <colgroup><col class="label-col"><col class="value-col"><col class="value-col"></colgroup>
+            <thead><tr><th>测定项目</th><th>样品1</th><th>样品2</th></tr></thead>
+            <tbody>
+              <tr><th>样品编号</th><td><input class="entry" data-field="sampleNo1" value="1"></td><td><input class="entry" data-field="sampleNo2" value="2"></td></tr>
+              <tr><th>供试品质量 m（g）</th><td><input id="mass1" class="entry" data-field="mass1" data-number inputmode="decimal"></td><td><input id="mass2" class="entry" data-field="mass2" data-number inputmode="decimal"></td></tr>
+              <tr><th>样品消耗体积 V（mL）</th><td><input id="volume1" class="entry" data-field="volume1" data-number inputmode="decimal"></td><td><input id="volume2" class="entry" data-field="volume2" data-number inputmode="decimal"></td></tr>
+              <tr class="result-row"><th>供试品质量（g）</th><td><input id="sampleWeight1" class="output" readonly value="—"></td><td><input id="sampleWeight2" class="output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>校正体积 V－V₀（mL）</th><td><input id="change1" class="output" readonly value="—"></td><td><input id="change2" class="output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>二氧化硫残留量 X（mg/kg）</th><td><input id="result1" class="output" readonly value="—"></td><td><input id="result2" class="output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>相对偏差（%）</th><td colspan="2"><input id="relativeDeviation" class="output wide-output" readonly value="—"></td></tr>
+              <tr class="result-row"><th>平均残留量（mg/kg）</th><td colspan="2"><input id="average" class="output wide-output" readonly value="—"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">计算：</h2>
+        <div class="formula-box">二氧化硫残留量（mg/kg）＝（V－V₀）×F×1000÷m</div>
+        <p class="formula-note">V为样品消耗体积，V₀为空白消耗体积，F为每1mL滴定液对应的SO₂质量，m为供试品质量。</p>
+        <div class="result-lines">
+          <div class="result-line"><span>X₁＝</span><strong id="summary1">—</strong><span>mg/kg</span></div>
+          <div class="result-line"><span>X₂＝</span><strong id="summary2">—</strong><span>mg/kg</span></div>
+          <div class="result-line"><span>相对偏差＝</span><strong id="summaryRd">—</strong><span>%</span></div>
+          <div class="result-line"><span>平均残留量＝</span><strong id="summaryAvg">—</strong><span>mg/kg</span></div>
+        </div>
+        <div class="standard-grid">
+          <span>标准规定：</span>
+          <select id="relation" class="entry-select" data-field="relation"><option value="max">不得高于</option><option value="min">不得少于</option></select>
+          <input id="spec" class="entry" data-field="spec" data-number inputmode="decimal" placeholder="请输入">
+          <span>mg/kg</span>
+        </div>
+        <div class="standard-grid"><span>标准文字：</span><input id="standardText" class="output" readonly value="请输入标准规定。"></div>
+        <div class="rounding-note">数值按“四舍六入五成双”修约；两份结果比标准规定多保留1位小数，平均结果与标准规定保留相同小数位。</div>
+        <div class="status-row"><div>测定结果：<span id="resultStatus" class="status pending">待输入</span></div><div class="conclusion">结论：本品二氧化硫残留量测定结果 <span id="overallStatus" class="status pending">待输入</span>。</div></div>
+      </section>
+      <footer class="paper-footer"><span>合肥卫元堂中药股份有限公司 GMP 受控记录辅助计算</span><span>本页数据刷新后清空</span></footer>
+    </article>
+  </main>
+  <div id="toast" class="toast"></div>
+  <script src="lab-common.js?v=20260725-1"></script>
+</body>
+</html>
